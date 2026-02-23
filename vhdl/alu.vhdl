@@ -1,10 +1,11 @@
+-- 1-indexed because i forgor
 library ieee;
 use ieee.std_logic_1164.all;
 entity alu is
 generic (bit_width : integer := 32);
 port (
-  a, b : in std_logic_vector(bit_width-1 downto 0);
-  aluOP : in std_logic_vector(2 downto 0);
+  i_a, i_b : in std_logic_vector(bit_width-1 downto 0);
+  i_operation : in std_logic_vector(2 downto 0);
   o_aluZero, o_aluCarryOut : out std_logic;
   o : out std_logic_vector(bit_width-1 downto 0)
 );
@@ -12,10 +13,6 @@ end alu;
 
 architecture rtl of alu is
 
--- 000 and
--- 001 or
--- 010 add
--- 110 sub
 
   component addSub_nBit is
     generic ( n : integer := bit_width );
@@ -40,25 +37,44 @@ architecture rtl of alu is
 
   signal int_and, int_or, int_addSub: std_logic_vector(bit_width-1 downto 0); 
   signal int_isSub : std_logic;
+  signal zero : std_logic_vector(bit_width-1 downto 0) := (others => '0'); 
 begin
+
   
   -- could be more elegant
   -- sub if aluOp == 110
-  int_isSub <=  aluOp(2) and 
-                aluOp(1) and 
-                not aluOp(0);
+  int_isSub <=  i_operation(2) and 
+                i_operation(1) and 
+                not i_operation(0);
 
-  int_and <= a and b; 
-  int_or <= a or b; 
+  int_and <= i_a and i_b; 
+  int_or <= i_a or i_b; 
 
   addSub: addSub_nBit 
     generic map ( n => bit_width )
     port map (
-      x => a,
-      y => b,
+      x => i_a,
+      y => i_b,
       ci => int_isSub, 
       s => int_addSub,
       co => o_aluCarryOut
    );
 
+  muxOut: mux8_nBit
+  -- 000 and
+  -- 001 or
+  -- 010 add
+  -- 110 sub
+    generic map (bit_width =>  bit_width)
+    port map (
+      sel => i_operation,
+      i_1 => int_and, --000
+      i_2 => int_or, --001
+      i_3 => int_addSub, --010
+      i_4 => zero, --011
+      i_5 => zero, --100
+      i_6 => zero, --101
+      i_7 =>  int_addSub, --110
+      i_8 => zero --111
+    );
 end rtl;
