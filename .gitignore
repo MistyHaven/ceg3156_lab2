@@ -1,2 +1,5 @@
 .direnv/
 ./reference-old/*
+wave.ghw
+wave.vcd
+work-obj93.cf
