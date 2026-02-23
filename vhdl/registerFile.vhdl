@@ -24,7 +24,7 @@ end registerFile;
 architecture rtl of registerFile is
   -- deps:
   -- nBit_register, dFF_2
-  component nBit_register 
+  component regPIPO_nBit 
     generic ( bit_width : integer := 32 );
     port (
       clock, reset : in std_logic;
@@ -35,7 +35,7 @@ architecture rtl of registerFile is
   end component;
 
 
-  component nBit_mux8 is
+  component mux8_nBit is
     generic (bit_width : integer := 8);
     port (
       i_1, i_2, i_3, i_4,
@@ -63,7 +63,7 @@ begin
 
   registers: for i in n-1 downto 0 generate
   begin
-  reg_i : nBit_register
+  reg_i : regPIPO_nBit
   generic map ( bit_width => bit_width )
   port map (
     clock => clock,
@@ -74,8 +74,8 @@ begin
   );
   end generate;
 
-  read1: nBit_mux8
-   generic map( bit_width => bit_width)
+  read1: mux8_nBit
+   generic map(bit_width => bit_width)
    port map(
       i_1 => r1, i_2 => r2, i_3 => r3, i_4 => r4,
       i_5 => r5, i_6 => r6, i_7 => r7, i_8 => r8,
@@ -83,8 +83,8 @@ begin
       o => readReg1
   );
 
-  read2: nBit_mux8
-   generic map( bit_width => bit_width)
+  read2: mux8_nBit
+   generic map(bit_width => bit_width)
    port map(
       i_1 => r1, i_2 => r2, i_3 => r3, i_4 => r4,
       i_5 => r5, i_6 => r6, i_7 => r7, i_8 => r8,
