@@ -17,17 +17,16 @@ architecture rtl of aluControl is
   alias f4 : std_logic is i_func(4);
   alias f5 : std_logic is i_func(5);
 
-  alias op1 : std_logic is i_aluOP(0);
-  alias op2 : std_logic is i_aluOP(1);
+  alias op0 : std_logic is i_aluOP(0);
+  alias op1 : std_logic is i_aluOP(1);
 
 begin
-  o_operation(2) <= (f1 and op1) or op2;
+  o_operation(2) <= (f1 and op1) or op0;
   o_operation(1) <= (not op1) or (not f2);
   o_operation(0) <= (f3 or f0) and op1;
 
 end rtl;
 
--- ==== 1-BIT FULL ADDER TESTBENCH
 library ieee;
 use ieee.std_logic_1164.all;
 entity aluControlTB is 
@@ -81,7 +80,7 @@ process begin
 
   aluOP_TB <= "01"; func_TB <= "000000";
   wait for clock_period;
-  assert op_TB = "011" report "test 2 should be 011";
+  assert op_TB = "110" report "test 2 should be 110";
 
   aluOP_TB <= "10"; func_TB <= "000000";
   wait for clock_period;

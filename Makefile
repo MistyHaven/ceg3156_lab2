@@ -1,10 +1,10 @@
 # === VHDL
 GHDL = ghdl
-R_FLAGS = --vcd=$(WAVE_F).vcd --wave=$(WAVE_F).ghw
+R_FLAGS = --vcd=$(WAVE_F).vcd --wave=$(WAVE_F).ghw --stop-time=1us
 
 # === vhdl components
 DEPS = ./vhdl/*.vhdl
-TOP_LEVEL = registerFile
+TOP_LEVEL = aluControlTB
 
 WAVE_F = wave
 
