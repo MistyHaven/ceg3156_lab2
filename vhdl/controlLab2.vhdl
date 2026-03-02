@@ -42,15 +42,15 @@ begin
     not op5 and not op4 and op3 and 
     not op2 and not op1 and op0;
 
-regDst <= rFormat;
-aluSrc <= lw or sw;
-memToReg <= lw;
-regWrite <= rFormat or lw;
-memRead <= lw;
-memWrite <= sw;
-branch <= beq or bne;
-branchNEQ <= bne;
-aluOP(1) <= rFormat;
-aluOP(0) <= beq or bne;
+  regDst <= rFormat;
+  aluSrc <= lw or sw;
+  memToReg <= lw;
+  regWrite <= rFormat or lw;
+  memRead <= lw;
+  memWrite <= sw;
+  branch <= beq or bne;
+  branchNEQ <= bne;
+  aluOP(1) <= rFormat;
+  aluOP(0) <= beq or bne;
 
 end rtl;
