@@ -59,7 +59,7 @@ begin
       s => int_addSub,
       co => o_aluCarryOut
    );
-
+	
   muxOut: mux8_nBit
   -- 000 and
   -- 001 or
@@ -75,6 +75,13 @@ begin
       i_5 => zero, --100
       i_6 => zero, --101
       i_7 =>  int_addSub, --110
-      i_8 => zero --111
+      i_8 => zero, --111
+		o => o
     );
+	 
+	o_aluZero <=not (int_addSub(31) and int_addSub(30) and int_addSub(29) and int_addSub(28) and int_addSub(27) and int_addSub(26) and int_addSub(25) and int_addSub(24) and
+						int_addSub(23) and int_addSub(22) and int_addSub(21) and int_addSub(20) and int_addSub(19) and int_addSub(18) and int_addSub(17) and int_addSub(16) and
+						int_addSub(15) and int_addSub(14) and int_addSub(13) and int_addSub(12) and int_addSub(11) and int_addSub(10) and int_addSub(9) and int_addSub(8) and
+						int_addSub(7) and int_addSub(6) and int_addSub(5) and int_addSub(4) and int_addSub(3) and int_addSub(2) and int_addSub(1) and int_addSub(0)
+						);
 end rtl;
